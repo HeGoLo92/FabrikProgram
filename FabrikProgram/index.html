@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fabrik Program — Programaciones Semanales de CrossFit®</title>
+  <meta name="description" content="Fabrik Program: planificaciones semanales estilo CrossFit®, seguimiento de alumnos y progresiones por niveles con área personal." />
+  <meta name="theme-color" content="#f2d6a2" />
+  <!-- Open Graph / SEO -->
+  <meta property="og:title" content="Fabrik Program" />
+  <meta property="og:description" content="Programaciones semanales, seguimiento de marcas y progresión por niveles. Con login y área personal." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://fabrikprogram.com/" />
+  <meta property="og:image" content="/og-image.png" />
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Paleta inspirada en el logo: azul acero + crema */
+      --bg: #0d2a49;
+      --surface: #0f2640;
+      --text: #e8ecf2;
+      --muted: #96a4b6;
+      --primary: #f2d6a2; /* crema del logo */
+      --accent: #ffd166;  /* detalle cálido */
+      --ring: rgba(242,214,162,.35);
+      --shadow: 0 10px 25px rgba(2,6,23,.35);
+    }
+    :root.light {
+      --bg: #f6f7fb;
+      --surface: #ffffff;
+      --text: #0f172a;
+      --muted: #4b5a70;
+      --primary: #dcbf8a;
+      --accent: #eab308;
+      --ring: rgba(220,191,138,.25);
+      --shadow: 0 10px 25px rgba(2,6,23,.12);
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body { margin: 0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif; background: var(--bg); color: var(--text); line-height: 1.65; }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(1100px, 92%); margin: 0 auto; }
+    /* UI */
+    .btn { display:inline-flex; align-items:center; gap:.55rem; padding:.85rem 1.1rem; border:1px solid transparent; border-radius:.9rem; font-weight:800; background: var(--primary); color:#1b2637; box-shadow: var(--shadow); transition: transform .12s ease, box-shadow .2s ease; }
+    .btn:hover { transform: translateY(-1px); box-shadow: 0 16px 36px rgba(242,214,162,.35); }
+    .btn.secondary { background: transparent; color: var(--text); border-color:#2c3f57; }
+    header { position: sticky; top:0; z-index:50; backdrop-filter: saturate(180%) blur(10px); background: color-mix(in srgb, var(--bg) 86%, transparent); border-bottom:1px solid #1f3550; }
+    nav { display:flex; align-items:center; justify-content:space-between; padding:.8rem 0; }
+    .brand { display:flex; align-items:center; gap:.6rem; font-weight:800; letter-spacing:.2px; }
+    .brand-logo { width: 30px; height: 30px; border-radius:.4rem; overflow:hidden; display:grid; place-items:center; }
+    .brand-logo img { width:100%; height:100%; object-fit: cover; }
+    .nav-links { display:none; gap:1rem; }
+    .nav-actions { display:flex; align-items:center; gap:.6rem; }
+    .menu-btn { display:inline-flex; background:transparent; border:1px solid #2c3f57; color:var(--text); padding:.5rem .7rem; border-radius:.7rem; }
+    @media (min-width: 800px) { .nav-links{display:flex} .menu-btn#menuToggle{display:none} }
+
+    /* Hero */
+    .hero { padding: 5rem 0 3rem; display:grid; grid-template-columns:1.1fr 1fr; gap:2rem; align-items:center; }
+    .hero h1 { font-size: clamp(2rem, 4vw + 1rem, 3.5rem); line-height:1.1; margin:0 0 1rem; letter-spacing:-0.02em; }
+    .hero p { color: var(--muted); font-size: clamp(1rem, 1vw + .9rem, 1.15rem); }
+    .hero .cta { display:flex; gap:.8rem; flex-wrap:wrap; margin-top:1.4rem; }
+    .window { background:#0b1f37; border:1px solid #1f3550; border-radius:1rem; overflow:hidden; }
+    .titlebar { display:flex; align-items:center; gap:.4rem; padding:.6rem .8rem; border-bottom:1px solid #1f3550; background:#0f2640; }
+    .dot { width:.7rem; height:.7rem; border-radius:50%; }
+    .dot.red{ background:#ef4444 } .dot.yellow{ background:#f59e0b } .dot.green{ background:#22c55e }
+    .code { padding:1rem; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size:.9rem; color:#e5e7eb; overflow:auto; max-height:320px; }
+
+    /* Sections */
+    .section { padding:3.2rem 0; }
+    .section h2 { font-size: clamp(1.4rem, 1.5vw + 1rem, 2rem); margin:0 0 1rem; letter-spacing:-0.01em; }
+    .grid { display:grid; gap:1rem; grid-template-columns:1fr; }
+    @media (min-width: 800px) { .grid{ grid-template-columns: repeat(3, 1fr); } }
+    .card { background: var(--surface); border:1px solid #1f3550; border-radius:1.1rem; padding:1.1rem; box-shadow: var(--shadow); }
+    .muted { color: var(--muted); }
+
+    /* Pricing */
+    .pricing { display:grid; gap:1rem; grid-template-columns:1fr; }
+    @media (min-width: 900px) { .pricing{ grid-template-columns: repeat(3, 1fr);} }
+    .price { display:flex; align-items:baseline; gap:.35rem; font-weight:800; font-size:1.8rem; }
+    .pill { display:inline-block; border:1px solid #2c3f57; padding:.25rem .6rem; border-radius:999px; font-size:.8rem; color: var(--muted); }
+
+    /* Table */
+    table { width:100%; border-collapse:separate; border-spacing:0; }
+    th, td { padding:.7rem .6rem; border-bottom:1px solid #1f3550; text-align:left; }
+    th { color: var(--muted); font-weight:600; }
+
+    /* Modal login */
+    .modal { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; background: rgba(2,6,23,.6); backdrop-filter: blur(2px); z-index: 80; }
+    .modal.open { display: flex; }
+    .modal-card { width: min(420px, 92%); background: var(--surface); border: 1px solid #1f3550; border-radius: 1rem; padding: 1rem; box-shadow: var(--shadow); }
+
+    /* Área personal */
+    .dashboard { display:none; }
+    .dashboard.active { display:block; }
+    .row { display:grid; gap:.7rem; grid-template-columns: 1fr; }
+    @media (min-width: 760px){ .row{ grid-template-columns: repeat(4, 1fr);} }
+    input, select, textarea { background: var(--surface); color: var(--text); border: 1px solid #2c3f57; border-radius: .8rem; padding: .75rem .9rem; outline: none; }
+    input:focus, select:focus, textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 .25rem var(--ring); }
+
+    footer { border-top:1px solid #1f3550; padding:2rem 0; color: var(--muted); }
+    .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip: rect(0, 0, 0, 0); border:0; }
+    .hide { display:none; }
+  </style>
+</head>
+<body>
+  <a class="sr-only" href="#contenido">Saltar al contenido</a>
+  <header>
+    <div class="container">
+      <nav aria-label="Principal">
+        <div class="brand">
+          <div class="brand-logo" aria-hidden="true">
+            <!-- Coloca tu archivo del logo en /public/logo-fabrik.png (o ajusta la ruta abajo) -->
+            <img src="/logo-fabrik.png" alt="Logo de Fabrik Program" />
+          </div>
+          <span>Fabrik Program</span>
+        </div>
+        <div class="nav-links" role="menubar">
+          <a role="menuitem" href="#como-funciona">Cómo funciona</a>
+          <a role="menuitem" href="#programacion">Programación</a>
+          <a role="menuitem" href="#planes">Planes</a>
+          <a role="menuitem" href="#faq">FAQ</a>
+          <a role="menuitem" href="#area">Área personal</a>
+        </div>
+        <div class="nav-actions">
+          <span id="welcomeTag" class="muted"></span>
+          <button id="themeToggle" class="menu-btn" aria-pressed="false" aria-label="Cambiar tema">🌓</button>
+          <button id="loginBtn" class="menu-btn" aria-haspopup="dialog" aria-controls="loginModal">Acceder</button>
+          <button id="logoutBtn" class="menu-btn hide">Salir</button>
+          <button id="menuToggle" class="menu-btn" aria-expanded="false" aria-controls="mobileMenu">☰</button>
+          <a class="btn" href="#planes">Empieza ahora</a>
+        </div>
+      </nav>
+      <div id="mobileMenu" class="hide" role="menu" aria-label="Menú móvil">
+        <div class="card">
+          <a role="menuitem" href="#como-funciona">Cómo funciona</a><br>
+          <a role="menuitem" href="#programacion">Programación</a><br>
+          <a role="menuitem" href="#planes">Planes</a><br>
+          <a role="menuitem" href="#faq">FAQ</a><br>
+          <a role="menuitem" href="#area">Área personal</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <section class="hero container">
+      <div>
+        <h1>Fabrik Program<br><span style="color:var(--primary)">Programaciones semanales</span> con seguimiento personal</h1>
+        <p>Entrena con una planificación estilo CrossFit® para mejorar fuerza, resistencia y habilidad. Recibe cada semana tus WODs, registra marcas y progresa por niveles. Con login y área personal.</p>
+        <div class="cta">
+          <a class="btn" href="#planes">Unirme al programa</a>
+          <button class="btn secondary" id="openArea">Ir a mi área</button>
+        </div>
+      </div>
+      <div class="window" aria-label="Vista previa de programación">
+        <div class="titlebar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span style="margin-left:.5rem" class="muted">Semana de ejemplo</span></div>
+        <pre class="code"><code># Semana 42 — Foco: Fuerza + Motor
+Lunes   — Fuerza: Back Squat 5x5 @75%  | Metcon 10' AMRAP: 10 TTB, 12 DB Snatch
+Martes  — Gimnástico: Pull-up/Ring Row | Metcon For Time: 21-15-9 KBS + Burpees
+Miércoles — Descarga activa / movilidad
+Jueves  — Técnica OLY: Clean Complex    | EMOM 16': 1 Clean + 10 Cal Bike
+Viernes — Tester: 5k Row                | Core y accesorios
+Sábado  — Partner WOD                   | OPCIONAL
+Domingo — Rest                          | OPCIONAL movilidad
+</code></pre>
+      </div>
+    </section>
+
+    <section id="como-funciona" class="section container">
+      <h2>Cómo funciona</h2>
+      <div class="grid">
+        <article class="card">
+          <h3>1) Programación semanal</h3>
+          <p class="muted">Publicamos WODs cada domingo con enfoque (fuerza, motor, habilidad) y notas de intención.</p>
+        </article>
+        <article class="card">
+          <h3>2) Seguimiento de marcas</h3>
+          <p class="muted">Registra tiempos, cargas y RPE. Visualiza tu progresión y recibe ajustes.</p>
+        </article>
+        <article class="card">
+          <h3>3) Niveles y escalados</h3>
+          <p class="muted">RX, Intermedio y Beginner. Siempre hay versión adaptada para seguir el estímulo.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="programacion" class="section container">
+      <h2>Ejemplo de programación semanal</h2>
+      <div class="card">
+        <table aria-label="Tabla de WODs de ejemplo">
+          <thead>
+            <tr><th>Día</th><th>Foco</th><th>RX</th><th>Escalado</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Lunes</td><td>Fuerza + Gimnástico</td><td>Back Squat 5x5 @75% · 10' AMRAP: 10 TTB / 12 DB Snatch</td><td>Back Squat 5x5 ligero · 10' AMRAP: 10 Knees-Up / 12 DB Snatch ligero</td></tr>
+            <tr><td>Martes</td><td>Motor</td><td>For Time 21-15-9: KBS 24/16 + Burpees</td><td>For Time 21-15-9: KBS 16/12 + Up-Downs</td></tr>
+            <tr><td>Jueves</td><td>Técnica OLY</td><td>EMOM 16': 1 Clean pesado + 10 Cal Bike</td><td>EMOM 16': 1 Hang Power Clean técnico + 8 Cal Bike</td></tr>
+            <tr><td>Viernes</td><td>Tester</td><td>Row 5k — anota tiempo y split</td><td>Row/Assault 3k — anota tiempo</td></tr>
+          </tbody>
+        </table>
+        <p class="muted" style="margin-top:.6rem">*Los miércoles y fines de semana incluyen movilidad/opcional.</p>
+      </div>
+    </section>
+
+    <section id="planes" class="section container">
+      <h2>Planes y precios</h2>
+      <div class="pricing">
+        <article class="card">
+          <span class="pill">Beginner</span>
+          <h3>Base</h3>
+          <p class="price">9€ <small class="muted">/ mes</small></p>
+          <ul class="muted">
+            <li>Programación semanal (escala Beginner)</li>
+            <li>Seguimiento de marcas básico</li>
+            <li>Soporte por email</li>
+          </ul>
+          <a class="btn" href="#contacto">Elegir Base</a>
+        </article>
+        <article class="card" style="outline:2px solid var(--primary)">
+          <span class="pill">Intermedio</span>
+          <h3>Pro</h3>
+          <p class="price">19€ <small class="muted">/ mes</small></p>
+          <ul class="muted">
+            <li>RX + Intermedio</li>
+            <li>Histórico de marcas y hitos</li>
+            <li>Feedback mensual</li>
+          </ul>
+          <a class="btn" href="#contacto">Elegir Pro</a>
+        </article>
+        <article class="card">
+          <span class="pill">Competidor</span>
+          <h3>Elite</h3>
+          <p class="price">39€ <small class="muted">/ mes</small></p>
+          <ul class="muted">
+            <li>Doble sesión opcional</li>
+            <li>Video-demos y warm-ups</li>
+            <li>Revisión quincenal 1:1</li>
+          </ul>
+          <a class="btn" href="#contacto">Elegir Elite</a>
+        </article>
+      </div>
+    </section>
+
+    <section id="faq" class="section container">
+      <h2>Preguntas frecuentes</h2>
+      <div class="grid">
+        <article class="card"><h3>¿Necesito material específico?</h3><p class="muted">Casi todo puede adaptarse. Recomendado: barra, discos, kettlebell, cuerda y bici/remo.</p></article>
+        <article class="card"><h3>¿Cuándo se publica la semana?</h3><p class="muted">Cada domingo a las 18:00 (CET) subimos la nueva semana con notas y objetivos.</p></article>
+        <article class="card"><h3>¿Cómo registro mis marcas?</h3><p class="muted">Desde tu área personal (datos almacenados en tu dispositivo por ahora).</p></article>
+      </div>
+    </section>
+
+    <!-- ÁREA PERSONAL -->
+    <section id="area" class="section container dashboard">
+      <h2>Mi Área — Registro de marcas</h2>
+      <p class="muted">Tus datos se guardan localmente en este dispositivo (localStorage). Próximamente: sincronización en la nube.</p>
+
+      <div class="card">
+        <div class="row">
+          <select id="movement">
+            <option value="Back Squat">Back Squat</option>
+            <option value="Front Squat">Front Squat</option>
+            <option value="Deadlift">Deadlift</option>
+            <option value="Clean">Clean</option>
+            <option value="Snatch">Snatch</option>
+            <option value="Strict Press">Strict Press</option>
+            <option value="Bench Press">Bench Press</option>
+            <option value="Thruster">Thruster</option>
+          </select>
+          <input id="weight" type="number" inputmode="decimal" step="0.5" placeholder="Peso (kg)" />
+          <input id="date" type="date" />
+          <input id="notes" type="text" placeholder="Notas (RPE, series, etc.)" />
+        </div>
+        <div style="margin-top:.7rem; display:flex; gap:.6rem; flex-wrap:wrap">
+          <button class="btn" id="addEntry">Añadir registro</button>
+          <button class="btn secondary" id="exportCsv">Exportar CSV</button>
+          <button class="btn secondary" id="clearAll">Borrar todo (este dispositivo)</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:1rem">
+        <table aria-label="Histórico de marcas">
+          <thead>
+            <tr><th>Fecha</th><th>Movimiento</th><th>Peso (kg)</th><th>Notas</th><th></th></tr>
+          </thead>
+          <tbody id="logsBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="contacto" class="section container">
+      <h2>Únete a Fabrik Program</h2>
+      <p class="muted">Rellena el formulario y te enviaremos el acceso. Si eres dueño de box y quieres planificar para tu comunidad, indícalo.</p>
+      <form id="contactForm" novalidate>
+        <label for="name" class="sr-only">Nombre</label>
+        <input id="name" name="name" type="text" placeholder="Tu nombre" required />
+
+        <label for="email" class="sr-only">Email</label>
+        <input id="email" name="email" type="email" placeholder="tu@email.com" required />
+
+        <label for="role" class="sr-only">Perfil</label>
+        <input id="role" name="role" type="text" placeholder="Atleta / Coach / Box owner" />
+
+        <label for="message" class="sr-only">Mensaje</label>
+        <textarea id="message" name="message" rows="5" placeholder="Cuéntanos tu objetivo (fuerza, motor, compes...)" required></textarea>
+
+        <button class="btn" type="submit">Solicitar acceso</button>
+        <p id="formMsg" class="muted" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      © <span id="year"></span> Fabrik Program · No afiliado ni endosado por CrossFit, LLC.
+    </div>
+  </footer>
+
+  <!-- MODAL LOGIN/REGISTRO (mock local) -->
+  <div id="loginModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+    <div class="modal-card">
+      <h3 id="loginTitle">Acceder a tu cuenta</h3>
+      <p class="muted">Versión demo sin servidor: se guarda un usuario en este dispositivo. Para producción conectaremos API (JWT).</p>
+      <form id="loginForm" style="display:grid; gap:.7rem; margin-top:.5rem">
+        <input id="loginEmail" type="email" placeholder="Email" required>
+        <input id="loginName" type="text" placeholder="Nombre visible" required>
+        <input id="loginPassword" type="password" placeholder="Contraseña (demo)" required>
+        <div style="display:flex; gap:.6rem; flex-wrap:wrap; margin-top:.3rem">
+          <button class="btn" type="submit">Entrar</button>
+          <button class="btn secondary" type="button" id="closeLogin">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Año
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Menú móvil
+    const menuBtn = document.getElementById('menuToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuBtn.addEventListener('click', () => {
+      const open = mobileMenu.classList.toggle('hide');
+      menuBtn.setAttribute('aria-expanded', String(!open));
+    });
+
+    // Tema
+    const themeBtn = document.getElementById('themeToggle');
+    const root = document.documentElement;
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') root.classList.add('light');
+    themeBtn.addEventListener('click', () => {
+      root.classList.toggle('light');
+      const isLight = root.classList.contains('light');
+      themeBtn.setAttribute('aria-pressed', String(isLight));
+      localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    });
+
+    // LOGIN DEMO (localStorage)
+    const loginBtn = document.getElementById('loginBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const loginModal = document.getElementById('loginModal');
+    const loginForm = document.getElementById('loginForm');
+    const closeLogin = document.getElementById('closeLogin');
+    const welcomeTag = document.getElementById('welcomeTag');
+
+    const LS_USER = 'fabrik_user';
+    const LS_LOGS = 'fabrik_logs_v1';
+
+    function getUser(){ try { return JSON.parse(localStorage.getItem(LS_USER)) } catch(e){ return null } }
+    function setUser(u){ localStorage.setItem(LS_USER, JSON.stringify(u)); renderAuth(); }
+    function logout(){ localStorage.removeItem(LS_USER); renderAuth(); }
+
+    function renderAuth(){
+      const u = getUser();
+      const dashboard = document.getElementById('area');
+      if(u){
+        welcomeTag.textContent = `Hola, ${u.name}`;
+        loginBtn.classList.add('hide');
+        logoutBtn.classList.remove('hide');
+        dashboard.classList.add('active');
+      } else {
+        welcomeTag.textContent = '';
+        loginBtn.classList.remove('hide');
+        logoutBtn.classList.add('hide');
+        dashboard.classList.remove('active');
+      }
+      renderTable();
+    }
+
+    loginBtn.addEventListener('click', () => loginModal.classList.add('open'));
+    closeLogin.addEventListener('click', () => loginModal.classList.remove('open'));
+    logoutBtn.addEventListener('click', logout);
+
+    loginForm.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value.trim();
+      const name = document.getElementById('loginName').value.trim();
+      const password = document.getElementById('loginPassword').value; // demo
+      if(!email || !name || !password) return;
+      setUser({ email, name });
+      loginModal.classList.remove('open');
+    });
+
+    document.getElementById('openArea').addEventListener('click', ()=>{
+      const u = getUser();
+      if(!u){ loginModal.classList.add('open'); } else { document.getElementById('area').scrollIntoView({behavior:'smooth'}); }
+    });
+
+    // Área personal: CRUD local
+    const movement = document.getElementById('movement');
+    const weight = document.getElementById('weight');
+    const date = document.getElementById('date');
+    const notes = document.getElementById('notes');
+    const addEntry = document.getElementById('addEntry');
+    const exportCsvBtn = document.getElementById('exportCsv');
+    const clearAllBtn = document.getElementById('clearAll');
+    const logsBody = document.getElementById('logsBody');
+
+    function getLogs(){ try { return JSON.parse(localStorage.getItem(LS_LOGS)) || {} } catch(e){ return {} } }
+    function setLogs(l){ localStorage.setItem(LS_LOGS, JSON.stringify(l)); }
+
+    function userKey(){ const u = getUser(); return u ? u.email : null }
+
+    function addLog(entry){
+      const key = userKey(); if(!key) return;
+      const logs = getLogs();
+      logs[key] = logs[key] || [];
+      logs[key].push(entry);
+      setLogs(logs);
+      renderTable();
+    }
+
+    function deleteLog(idx){
+      const key = userKey(); if(!key) return;
+      const logs = getLogs();
+      logs[key].splice(idx,1);
+      setLogs(logs);
+      renderTable();
+    }
+
+    function renderTable(){
+      const key = userKey();
+      const logs = getLogs();
+      const rows = (key && logs[key]) ? logs[key] : [];
+      logsBody.innerHTML = rows.map((r,i)=>`<tr>
+        <td>${r.date || ''}</td>
+        <td>${r.movement}</td>
+        <td>${r.weight}</td>
+        <td>${r.notes || ''}</td>
+        <td><button class="menu-btn" aria-label="Borrar" data-del="${i}">✕</button></td>
+      </tr>`).join('');
+      // bind delete
+      logsBody.querySelectorAll('button[data-del]').forEach(btn=>{
+        btn.addEventListener('click', ()=> deleteLog(parseInt(btn.getAttribute('data-del'))));
+      })
+    }
+
+    addEntry.addEventListener('click', ()=>{
+      const u = getUser(); if(!u){ loginModal.classList.add('open'); return; }
+      if(!weight.value || !date.value){ alert('Introduce peso y fecha'); return; }
+      addLog({ date: date.value, movement: movement.value, weight: parseFloat(weight.value), notes: notes.value });
+      weight.value = ''; notes.value = '';
+    });
+
+    exportCsvBtn.addEventListener('click', ()=>{
+      const key = userKey(); if(!key){ loginModal.classList.add('open'); return; }
+      const rows = (getLogs()[key]||[]);
+      const header = 'fecha,movimiento,peso,notas
+';
+      const body = rows.map(r=>`${r.date},${r.movement},${r.weight},"${(r.notes||'').replace(/"/g,'\"')}"`).join('
+');
+      const blob = new Blob([header+body], {type:'text/csv'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = 'fabrik-mis-marcas.csv'; a.click(); URL.revokeObjectURL(url);
+    });
+
+    clearAllBtn.addEventListener('click', ()=>{
+      const key = userKey(); if(!key) return;
+      const logs = getLogs(); logs[key] = []; setLogs(logs); renderTable();
+    });
+
+    // Form de contacto (placeholder)
+    const form = document.getElementById('contactForm');
+    const formMsg = document.getElementById('formMsg');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(form));
+      if (!data.name || !data.email || !data.message) {
+        formMsg.textContent = 'Por favor, completa los campos obligatorios.';
+        return;
+      }
+      // TODO: Conectar backend — ejemplo de payload
+      // fetch('/api/alta', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(data) })
+      form.reset();
+      formMsg.textContent = '¡Gracias! Te enviaremos el acceso a Fabrik Program.';
+    });
+
+    // Iniciar
+    renderAuth();
+  </script>
+</body>
+</html>
